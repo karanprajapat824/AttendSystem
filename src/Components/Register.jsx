@@ -1,6 +1,42 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+
+
 
 const Register = () => {
+  const [formData, setFormData] = useState({
+    name: '',
+    address: '',
+    password: ''
+  });
+
+  const navigateTo = useNavigate();
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch('/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      });
+      const data = await response.json();
+      navigateTo('/dashboard');
+      // Handle success or display error message to the user
+    } catch (error) {
+      console.error('Error:', error);
+      // Handle error or display error message to the user
+    }
+  };
+
+
+
   return (
     <div className="flex min-h-[100dvh] items-center justify-center bg-[#f0f9ff] px-4 py-12 dark:bg-[#0c2b4a]">
       <div className="w-full max-w-md space-y-8">
@@ -12,7 +48,7 @@ const Register = () => {
             Secure your institute with a unique ID and password.
           </p>
         </div>
-        <form className="space-y-6" action="#" method="POST">
+        <form className="space-y-6" action="#" method="POST" onSubmit={handleSubmit}>
           <div>
             <label htmlFor="institute-name" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
               Institute Name
@@ -78,4 +114,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default Register
