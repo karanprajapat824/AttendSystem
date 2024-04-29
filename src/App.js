@@ -9,6 +9,7 @@ import Dashboard from './Components/Dashboard.jsx';
 import AddStudent from './Components/AddStudent.jsx';
 import AddTeacher from './Components/AddTeacher.jsx';
 import Login from './Components/Login.jsx';
+
 import './Components/cvr.ts';
 function App() {
   return (
